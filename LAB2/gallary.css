@@ -1,0 +1,18 @@
+img{
+width: 250px;
+height: 250px;
+margin: auto;
+border-radius: 20px;
+object-fit: cover;
+opacity: 0.5;
+transition: transform 0.8s;
+}
+
+img:hover{
+opacity: 1;
+transform: scale(1.2);
+border: 1px solid
+
+white;
+
+}
