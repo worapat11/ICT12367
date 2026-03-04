@@ -1,0 +1,70 @@
+{% extends "base.html"%}
+
+{% block title %}
+<title>เกี่ยวกับเรา</title>
+{% endblock %}
+
+{% block content %}
+
+<style>
+.img-fluid {
+    width: 100%;
+    height: 220px;       /* ปรับความสูงตามต้องการ */
+    object-fit: cover;   /* ตัดภาพให้พอดีกรอบ */
+    border-radius: 10px;
+}
+
+footer{
+    background:#3b3f46;
+    color:white;
+    text-align:center;
+    padding:10px;
+}
+</style>
+
+
+<div class="container mt-5">
+    <h3 class="text-center fw-bold">ภาพกิจกรรม</h3>
+    <p class="text-center text-muted">
+        กิจกรรมต่างๆจากเรา
+    </p>
+
+    <div class="row g-4 mt-3 mb-4">
+        
+        <div class="col-md-4">
+            <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085"
+                 class="img-fluid rounded shadow-sm">
+        </div>
+
+        <div class="col-md-4">
+            <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93"
+                 class="img-fluid rounded shadow-sm">
+        </div>
+
+        <div class="col-md-4">
+            <img src="https://images.unsplash.com/photo-1511920170033-f8396924c348"
+                 class="img-fluid rounded shadow-sm">
+        </div>
+
+        <div class="col-md-4">
+            <img src="https://images.unsplash.com/photo-1507914372368-b2b085b925a1"
+                 class="img-fluid rounded shadow-sm">
+        </div>
+
+        <div class="col-md-4">
+            <img src="https://images.unsplash.com/photo-1442512595331-e89e73853f31"
+                 class="img-fluid rounded shadow-sm">
+        </div>
+
+        <div class="col-md-4">
+            <img src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735"
+                 class="img-fluid rounded shadow-sm">
+        </div>
+
+    </div>
+</div>
+
+<footer>
+© 2026 ICT12367 SPU | Information Technology
+</footer>
+{% endblock %}
