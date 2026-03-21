@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>นัดหมาย</h2>
+
+<form method="get" class="row g-2 mb-3">
+    <div class="col-md-9">
+        <input type="text" name="q" value="{{ q|default:'' }}" class="form-control" placeholder="ค้นหานัดหมาย...">
+    </div>
+    <div class="col-md-3 d-flex gap-2">
+        <button class="btn btn-primary">ค้นหา</button>
+        <a href="{% url 'appointment_list' %}" class="btn btn-secondary">รีเซ็ต</a>
+    </div>
+</form>
+
+<a href="{% url 'add_appointment' %}" class="btn btn-primary mb-3">
+เพิ่มนัดหมาย
+</a>
+
+<table class="table table-bordered">
+
+<thead>
+
+<tr>
+<th>รหัสนัดหมาย</th>
+<th>สัตว์เลี้ยง</th>
+<th>สัตวแพทย์</th>
+<th>วันที่</th>
+<th>เวลา</th>
+<th>สถานะ</th>
+<th>จัดการ</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for a in appointments %}
+<tr>
+	<td>{{ a.appointment_id }}</td>
+	<td>{{ a.pet.pet_name }}</td>
+	<td>{% if a.vet %}{{ a.vet.vet_name }}{% else %}-{% endif %}</td>
+	<td>{{ a.appointment_date|date:'d/m/Y' }}</td>
+	<td>{{ a.appointment_time|time:'H:i' }}</td>
+	<td>
+		{% if a.status.status_name == "Scheduled" %}
+			<span class="badge bg-warning">นัดหมาย</span>
+		{% elif a.status.status_name == "Completed" %}
+			<span class="badge bg-success">เสร็จสิ้น</span>
+		{% elif a.status.status_name == "Cancelled" %}
+			<span class="badge bg-danger">ยกเลิก</span>
+		{% else %}
+			{{ a.status.status_name }}
+		{% endif %}
+	</td>
+	<td>
+		<a href="{% url 'edit_appointment' a.appointment_id %}" class="btn btn-warning btn-sm">แก้ไข</a>
+		<a href="{% url 'delete_appointment' a.appointment_id %}" class="btn btn-danger btn-sm" onclick="return confirm('ลบการนัดหมาย?')">ลบ</a>
+	</td>
+</tr>
+{% empty %}
+<tr><td colspan="6" class="text-center text-danger">ไม่พบการนัดหมาย</td></tr>
+{% endfor %}
+
+</tbody>
+
+</table>
+
+{% endblock %}

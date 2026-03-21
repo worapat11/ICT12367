@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+<h2 class="mb-3">ประวัติการรักษา</h2>
+
+<form method="get" class="row g-2 mb-3">
+    <div class="col-md-9">
+        <input type="text" name="q" value="{{ q|default:'' }}" class="form-control" placeholder="ค้นหาประวัติการรักษา...">
+    </div>
+    <div class="col-md-3 d-flex gap-2">
+        <button class="btn btn-primary">ค้นหา</button>
+        <a href="{% url 'medical_records' %}" class="btn btn-secondary">รีเซ็ต</a>
+    </div>
+</form>
+
+<a href="{% url 'add_medical_record' %}" class="btn btn-primary mb-3">
+เพิ่มประวัติการรักษา
+</a>
+
+<table class="table table-bordered table-hover text-center">
+
+<thead class="table-dark">
+
+<tr>
+<th>รหัสประวัติ</th>
+<th>สัตว์เลี้ยง</th>
+<th>สัตวแพทย์</th>
+<th>การวินิจฉัย</th>
+<th>การรักษา</th>
+<th>ยา</th>
+<th>บิล</th>
+<th>วันที่</th>
+<th>จัดการ</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for record in records %}
+<tr>
+	<td>{{ record.record_id }}</td>
+	<td>{{ record.pet.pet_name }}</td>
+	<td>{% if record.vet %}{{ record.vet.vet_name }}{% else %}-{% endif %}</td>
+	<td>{{ record.diagnosis }}</td>
+	<td>{{ record.treatment }}</td>
+	<td>
+		{% for t in record.treatments_set.all %}
+		<div>{{ t.medicine.medicine_name }} x {{ t.quantity }}</div>
+		{% empty %}
+		- 
+		{% endfor %}
+	</td>
+	<td>
+		{% with bill=record.bills_set.all.0 %}
+		{% if bill %}
+		<a href="{% url 'bill_detail' bill.bill_id %}" class="btn btn-info btn-sm">ดู</a>
+		{% else %}-{% endif %}
+		{% endwith %}
+	</td>
+	<td>{{ record.visit_date|date:'d/m/Y' }}</td>
+	<td>
+		<a href="{% url 'edit_medical_record' record.record_id %}" class="btn btn-warning btn-sm">แก้ไข</a>
+		<a href="{% url 'delete_medical_record' record.record_id %}" class="btn btn-danger btn-sm" onclick="return confirm('ลบประวัตินี้?')">ลบ</a>
+	</td>
+</tr>
+{% empty %}
+<tr><td colspan="9" class="text-center text-danger">ไม่มีข้อมูล</td></tr>
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+{% endblock %}

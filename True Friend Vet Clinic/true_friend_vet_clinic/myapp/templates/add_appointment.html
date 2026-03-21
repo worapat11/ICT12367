@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="card main-card p-4">
+  <h2 class="mb-3">เพิ่มนัดหมาย</h2>
+  <form method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+      <p class="text-muted">รหัสนัดหมายจะสร้างโดยอัตโนมัติ</p>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">สัตว์เลี้ยง</label>
+      <select name="pet" class="form-select">
+        {% for p in pet %}
+        <option value="{{ p.pk }}">{{ p.pet_name }}{% if p.owner %} ({{ p.owner.first_name }} {{ p.owner.last_name }}){% endif %}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">สัตวแพทย์</label>
+      <select name="veterinarian" class="form-select">
+        {% for v in vets %}
+        <option value="{{ v.vet_id }}">{{ v.vet_name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="row g-3">
+      <div class="col-md-6">
+        <div class="mb-3">
+          <label class="form-label">วันที่</label>
+          <input type="date" name="appointment_date" class="form-control">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="mb-3">
+          <label class="form-label">เวลา</label>
+          <input type="time" name="appointment_time" class="form-control">
+        </div>
+      </div>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">สถานะ</label>
+      <select name="status" class="form-select">
+        <option value="">-- เลือกสถานะ --</option>
+        {% for s in statuses %}
+        <option value="{{ s.status_id }}">{{ s.status_name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">เหตุผล</label>
+      <textarea name="reason" class="form-control"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">บันทึก</button>
+    <a href="/appointments" class="btn btn-secondary">ยกเลิก</a>
+  </form>
+</div>
+{% endblock %}

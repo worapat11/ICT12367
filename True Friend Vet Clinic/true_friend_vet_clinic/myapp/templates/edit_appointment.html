@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>แก้ไขนัดหมาย</h2>
+
+<form method="POST">
+{% csrf_token %}
+
+<div class="mb-3">
+<label>รหัสนัดหมาย</label>
+<input type="text" name="appointment_id" class="form-control" value="{{ appointment.appointment_id }}" readonly>
+</div>
+
+<!-- PET -->
+
+<div class="mb-3">
+	<label for="petSelect" class="form-label">สัตว์เลี้ยง</label>
+	<select name="pet" id="petSelect" class="form-control">
+		{% for pet_obj in pet %}
+			<option value="{{ pet_obj.pk }}" {% if appointment.pet.pk == pet_obj.pk %}selected{% endif %}>
+				{{ pet_obj.pet_name }}
+				{% if pet_obj.owner %} ({{ pet_obj.owner.first_name }} {{ pet_obj.owner.last_name }}){% endif %}
+			</option>
+		{% endfor %}
+	</select>
+</div>
+
+<!-- VETERINARIAN -->
+
+<div class="mb-3">
+<label>สัตวแพทย์</label>
+<select name="veterinarian" class="form-control">
+{% for v in vets %}
+<option value="{{ v.vet_id }}" {% if appointment.vet and appointment.vet.vet_id == v.vet_id %}selected{% endif %}>{{ v.vet_name }}</option>
+{% endfor %}
+</select>
+</div>
+
+<!-- DATE -->
+
+<div class="mb-3">
+<label>วันที่</label>
+
+<input type="date"
+name="appointment_date"
+class="form-control"
+value="{{ appointment.appointment_date|date:'Y-m-d' }}">
+
+</div>
+
+<!-- TIME -->
+
+<div class="mb-3">
+<label>เวลา</label>
+
+<input type="time"
+name="appointment_time"
+class="form-control"
+value="{{ appointment.appointment_time|time:'H:i' }}">
+
+</div>
+
+
+<!-- STATUS -->
+
+<div class="mb-3">
+<label>สถานะ</label>
+
+<select name="status" class="form-control">
+    <option value="">-- Select status --</option>
+    {% for s in statuses %}
+    <option value="{{ s.status_id }}" {% if appointment.status and appointment.status.status_id == s.status_id %}selected{% endif %}>{{ s.status_name }}</option>
+    {% endfor %}
+</select>
+
+</div>
+
+
+<!-- REASON -->
+
+<div class="mb-3">
+
+<label>เหตุผล</label>
+
+<textarea name="reason" class="form-control">{{ appointment.reason }}</textarea>
+
+</div>
+
+
+<button class="btn btn-success">
+บันทึกการแก้ไข
+</button>
+
+<a href="/appointments/" class="btn btn-secondary">
+ยกเลิก
+</a>
+
+</form>
+
+{% endblock %}

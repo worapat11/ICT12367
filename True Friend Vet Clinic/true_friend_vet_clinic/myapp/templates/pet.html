@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>สัตว์เลี้ยง</h2>
+
+<form method="get" class="row g-2 mb-3">
+    <div class="col-md-9">
+        <input type="text" name="q" value="{{ q|default:'' }}" class="form-control" placeholder="ค้นหาสัตว์เลี้ยง...">
+    </div>
+    <div class="col-md-3 d-flex gap-2">
+        <button class="btn btn-primary">ค้นหา</button>
+        <a href="{% url 'pet_list' %}" class="btn btn-secondary">รีเซ็ต</a>
+    </div>
+</form>
+
+<a href="{% url 'add_pet' %}" class="btn btn-primary mb-3">
+เพิ่มสัตว์เลี้ยง
+</a>
+
+<table class="table table-bordered">
+
+<thead>
+
+<tr>
+<th>รหัสสัตว์</th>
+<th>รูป</th>
+<th>ชื่อ</th>
+<th>เจ้าของ</th>
+<th>สายพันธุ์</th>
+<th>พันธุ์</th>
+<th>เพศ</th>
+<th>อายุ</th>
+<th>น้ำหนัก</th>
+<th>จัดการ</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for row in pet %}
+<tr>
+	<td>{{ row.pet.pet_id }}</td>
+	<td>{% if row.image_url %}<img src="{{ row.image_url }}" class="img-thumbnail" style="height:56px; width:56px; object-fit:cover;">{% else %}-{% endif %}</td>
+	<td>{{ row.pet.pet_name }}</td>
+	<td>{{ row.pet.owner.first_name }} {{ row.pet.owner.last_name }}</td>
+	<td>{{ row.pet.species.species_name }}</td>
+	<td>{{ row.pet.breed }}</td>
+	<td>{{ row.pet.gender }}</td>
+	<td>{% if row.age_year is not None %}{{ row.age_year }} ปี {{ row.age_month }} เดือน{% else %}-{% endif %}</td>
+	<td>{{ row.pet.weight }}</td>
+	<td>
+		<a href="{% url 'edit_pet' row.pet.pet_id %}" class="btn btn-warning btn-sm">แก้ไข</a>
+		<a href="{% url 'delete_pet' row.pet.pet_id %}" class="btn btn-danger btn-sm" onclick="return confirm('ลบสัตว์เลี้ยงนี้?')">ลบ</a>
+	</td>
+</tr>
+{% empty %}
+<tr><td colspan="8" class="text-center text-danger">ไม่พบสัตว์เลี้ยง</td></tr>
+{% endfor %}
+
+</tbody>
+
+</table>
+
+{% endblock %}

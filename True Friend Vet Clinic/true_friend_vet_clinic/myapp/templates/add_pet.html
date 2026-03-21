@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="card main-card p-3 mt-3">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+            <h2 class="mb-0">สร้างโปรไฟล์สัตว์เลี้ยง</h2>
+            <p class="text-muted mb-0">เพิ่มข้อมูลสัตว์เลี้ยงใหม่ในระบบคลินิก</p>
+        </div>
+    </div>
+
+    <div class="row gy-3">
+        <div class="col-lg-4">
+            <div class="card profile-card p-3 text-center">
+                <div class="profile-avatar mb-3">
+                    <img id="pet-avatar-preview" src="https://via.placeholder.com/140x140?text=Avatar" alt="Preview" class="img-fluid rounded-circle" style="width:140px;height:140px;object-fit:cover;">
+                </div>
+                <h4 class="mb-1">สัตว์เลี้ยงใหม่</h4>
+                <p class="text-muted mb-1">กรอกข้อมูลทางด้านขวา</p>
+                <ul class="list-group list-group-flush text-start small">
+                    <li class="list-group-item px-0">- รหัสสัตว์เลี้ยงสร้างอัตโนมัติ</li>
+                    <li class="list-group-item px-0">- ติดตามเจ้าของ สายพันธุ์ และน้ำหนัก</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-lg-8">
+            <div class="card p-3">
+                <h5 class="mb-3">ข้อมูลสัตว์เลี้ยง</h5>
+                <form method="post" enctype="multipart/form-data" class="row g-3">
+                    {% csrf_token %}
+                    {% if error %}
+                    <div class="col-12"><div class="alert alert-danger">{{ error }}</div></div>
+                    {% endif %}
+
+                    <div class="col-md-12">
+                        <label class="form-label">ชื่อสัตว์เลี้ยง</label>
+                        <input type="text" name="pet_name" class="form-control" required>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">เจ้าของ</label>
+                        <select name="owner" class="form-select" required>
+                            <option value="">-- Select owner --</option>
+                            {% for o in owners %}
+                            <option value="{{ o.owner_id }}">{{ o.first_name }} {{ o.last_name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">สายพันธุ์</label>
+                        <select name="species" class="form-select" required>
+                            <option value="">-- Select species --</option>
+                            {% for s in species %}
+                            <option value="{{ s.species_id }}">{{ s.species_name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">พันธุ์</label>
+                        <input type="text" name="breed" class="form-control">
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">เพศ</label>
+                        <select name="gender" class="form-select">
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">อายุ (ปี)</label>
+                        <select name="age_year" class="form-select">
+                            <option value="">--</option>
+                            {% for y in years %}
+                            <option value="{{ y }}">{{ y }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">อายุ (เดือน)</label>
+                        <select name="age_month" class="form-select">
+                            <option value="">--</option>
+                            {% for m in months %}
+                            <option value="{{ m }}">{{ m }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">น้ำหนัก (กก.)</label>
+                        <input type="number" step="0.01" name="weight" class="form-control">
+                    </div>
+
+                    <div class="col-md-12">
+                        <label class="form-label">รูปสัตว์เลี้ยง</label>
+                        <input type="file" name="pet_image" accept="image/*" class="form-control">
+                    </div>
+
+                    <div class="col-12 d-flex gap-2 justify-content-end mt-2">
+                        <a href="/pets" class="btn btn-secondary">ยกเลิก</a>
+                        <button type="submit" class="btn btn-primary">บันทึก</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+const petImageInput = document.querySelector('input[name="pet_image"]');
+const petAvatarPreview = document.getElementById('pet-avatar-preview');
+if (petImageInput && petAvatarPreview) {
+    petImageInput.addEventListener('change', function() {
+        const file = this.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            petAvatarPreview.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    });
+}
+</script>
+{% endblock %}

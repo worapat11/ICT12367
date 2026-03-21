@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="card p-4 mt-3">
+    <h2>ใบเสร็จ POS</h2>
+    {% if error %}
+        <div class="alert alert-warning">{{ error }}</div>
+    {% else %}
+        <p><strong>รหัสบิล:</strong> {{ bill_id }}</p>
+        <p><strong>ลูกค้า:</strong> {{ customer_name }}</p>
+        <p><strong>วันที่:</strong> {{ transactions.0.transaction_date|date:'d/m/Y H:i' }}</p>
+
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>สินค้า</th>
+                        <th>จำนวน</th>
+                        <th>ราคา/หน่วย</th>
+                        <th>รวมย่อย</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for t in transactions %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ t.medicine_name }}</td>
+                            <td>{{ t.quantity }}</td>
+                            <td>{{ t.unit_price|floatformat:2 }}</td>
+                            <td>{{ t.total_amount|floatformat:2 }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th colspan="4" class="text-end">รวมก่อน VAT</th>
+                        <th>{{ pre_vat|floatformat:2 }}</th>
+                    </tr>
+                    <tr>
+                        <th colspan="4" class="text-end">VAT 7%</th>
+                        <th>{{ vat_amount|floatformat:2 }}</th>
+                    </tr>
+                    <tr class="table-success">
+                        <th colspan="4" class="text-end">รวมทั้งหมด</th>
+                        <th>{{ total|floatformat:2 }}</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+
+        <div class="d-flex gap-2 d-print-none">
+            <button class="btn btn-primary" onclick="window.print()">🖨️ ปริ้นบิล</button>
+            <a href="{% url 'pos' %}" class="btn btn-secondary">กลับ POS</a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

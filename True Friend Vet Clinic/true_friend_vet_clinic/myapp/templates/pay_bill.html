@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+<h2>ชำระบิล</h2>
+
+<div class="card p-3 mb-3">
+    <p><strong>รหัสบิล:</strong> {{ bill.bill_id }}</p>
+    <p><strong>ราคาสินค้าก่อน VAT:</strong> {{ pre_vat|floatformat:2 }} บาท</p>
+    <p><strong>VAT (7%):</strong> {{ vat|floatformat:2 }} บาท</p>
+    <p><strong>รวมทั้งหมด:</strong> {{ bill.total_amount|floatformat:2 }} บาท</p>
+</div>
+
+<form method="POST">
+    {% csrf_token %}
+    {% if error %}
+    <div class="alert alert-danger">{{ error }}</div>
+    {% endif %}
+
+    <div class="mb-3">
+        <label>รหัสบิล</label>
+        <input type="text" class="form-control" value="{{ bill.bill_id }}" readonly>
+    </div>
+
+    <div class="mb-3">
+        <label>วันที่บิล</label>
+        <input type="date" name="payment_date" class="form-control" value="{{ bill.bill_date|date:'Y-m-d' }}">
+    </div>
+
+    <div class="mb-3">
+        <label>วิธีชำระเงิน</label>
+        <select name="payment_method" class="form-control">
+            <option value="">-- เลือกวิธี --</option>
+            {% for m in method_names %}
+            <option value="{{ m }}" {% if bill.payment_method and bill.payment_method.method_name == m %}selected{% endif %}>{{ m }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label>จำนวนเงินที่ชำระ</label>
+        <input type="number" step="0.01" name="paid_amount" class="form-control" value="{{ bill.total_amount }}">
+    </div>
+
+    <button class="btn btn-success">ชำระเงิน</button>
+    <a href="{% url 'bill_detail' bill.bill_id %}" class="btn btn-secondary">ยกเลิก</a>
+</form>
+</div>
+
+<script>
+const paymentSelect = document.querySelector('select[name="payment_method"]');
+const qrArea = document.getElementById('qr-area');
+paymentSelect?.addEventListener('change', function() {
+    qrArea.style.display = this.options[this.selectedIndex].text.toLowerCase().includes('qr') ? 'block' : 'none';
+});
+if (paymentSelect && paymentSelect.selectedIndex >= 0) {
+    qrArea.style.display = paymentSelect.options[paymentSelect.selectedIndex].text.toLowerCase().includes('qr') ? 'block' : 'none';
+}
+</script>
+{% endblock %}

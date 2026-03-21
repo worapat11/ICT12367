@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2 class="page-title" class="d-print-none"><button class="btn btn-primary me-2 d-print-none" onclick="window.print()">🖨️ ปริ้น</button>รายงานสัตว์เลี้ยง</h2>
+<div class="row mb-3 d-print-none">
+    <div class="col-md-4"><div class="card p-3"><h5>สัตว์ทั้งหมด</h5><h3>{{ total_pets }}</h3></div></div>
+</div>
+
+<h4>จำนวนสัตว์ต่อสายพันธุ์</h4>
+<table class="table table-bordered">
+    <thead><tr><th>สายพันธุ์</th><th>จำนวน</th></tr></thead>
+    <tbody>
+    {% for row in pets_by_species %}
+    <tr><td>{{ row.species__species_name }}</td><td>{{ row.count }}</td></tr>
+    {% empty %}
+    <tr><td colspan="2">ไม่มีข้อมูลสัตว์</td></tr>
+    {% endfor %}
+    </tbody>
+    <tfoot>
+    <tr>
+        <th>รวม</th>
+        <th>{{ total_pets }}</th>
+    </tr>
+    </tfoot>
+</table>
+
+<h4>เจ้าของที่มีสัตว์มากที่สุด</h4>
+<table class="table table-bordered">
+    <thead><tr><th>เจ้าของ</th><th>จำนวนสัตว์</th></tr></thead>
+    <tbody>
+    {% for item in pets_by_owner %}
+    <tr><td>{{ item.owner__first_name }} {{ item.owner__last_name }}</td><td>{{ item.count }}</td></tr>
+    {% empty %}
+    <tr><td colspan="2">ไม่มีข้อมูล</td></tr>
+    {% endfor %}
+    </tbody>
+    <tfoot>
+    <tr>
+        <th>รวมเจ้าของ</th>
+        <th>{{ pets_by_owner|length }}</th>
+    </tr>
+    </tfoot>
+</table>
+
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+<h2>แก้ไขยา</h2>
+
+<form method="POST">
+{% csrf_token %}
+
+<div class="mb-3">
+<label>รหัสยา</label>
+<input type="text" name="medicine_id" class="form-control" value="{{ medicine.medicine_id }}" readonly>
+</div>
+
+<div class="mb-3">
+<label>ชื่อยา</label>
+<input type="text" name="medicine_name" class="form-control"
+value="{{ medicine.medicine_name }}">
+</div>
+
+<div class="mb-3"><label>ผู้จัดหา</label>
+<select name="supplier" class="form-control">
+    <option value="">-- Select supplier --</option>
+    {% for s in suppliers %}
+    <option value="{{ s.supplier_id }}" {% if medicine.supplier and medicine.supplier.supplier_id == s.supplier_id %}selected{% endif %}>{{ s.supplier_name }}</option>
+    {% endfor %}
+</select>
+</div>
+
+<div class="mb-3"><label>ประเภท</label>
+<select name="medicine_type" class="form-control">
+    <option value="">-- เลือกประเภท --</option>
+    <option value="ยารักษาโรคสัตว์" {% if medicine.type == "ยารักษาโรคสัตว์" %}selected{% endif %}>ยารักษาโรคสัตว์</option>
+    <option value="อาหารเสริมสัตว์" {% if medicine.type == "อาหารเสริมสัตว์" %}selected{% endif %}>อาหารเสริมสัตว์</option>
+    <option value="วิตามินสัตว์" {% if medicine.type == "วิตามินสัตว์" %}selected{% endif %}>วิตามินสัตว์</option>
+    <option value="อาหารสัตว์" {% if medicine.type == "อาหารสัตว์" %}selected{% endif %}>อาหารสัตว์</option>
+</select>
+</div>
+
+<div class="mb-3">
+<label>ราคา</label>
+<input type="number" step="0.01" name="price" class="form-control"
+value="{{ medicine.price }}">
+</div>
+
+<div class="mb-3">
+<label>คงคลัง</label>
+<input type="number" name="stock" class="form-control" min="0" value="{% if stock %}{{ stock.quantity }}{% else %}0{% endif %}">
+</div>
+
+{% if error %}
+<div class="alert alert-danger">{{ error }}</div>
+{% endif %}
+
+<button class="btn btn-success">บันทึก</button>
+<a href="/medicines/" class="btn btn-secondary">ยกเลิก</a>
+
+</form>
+
+</div>
+
+{% endblock %}

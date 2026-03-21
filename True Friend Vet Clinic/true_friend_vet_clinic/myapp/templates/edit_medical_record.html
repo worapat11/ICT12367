@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+<h2>แก้ไขประวัติการรักษา</h2>
+
+<form method="POST">
+{% csrf_token %}
+
+<div class="mb-3">
+<label>รหัสประวัติ</label>
+<input type="text" name="record_id" class="form-control" value="{{ record.record_id }}" readonly>
+</div>
+
+{% if error %}
+<div class="alert alert-danger">{{ error }}</div>
+{% endif %}
+
+<div class="mb-3">
+<label>สัตว์เลี้ยง</label>
+<select name="pet" class="form-control">
+{% for p in pet %}
+<option value="{{ p.pet_id }}" {% if record.pet.pet_id == p.pet_id %}selected{% endif %}>{{ p.pet_name }}</option>
+{% endfor %}
+</select>
+</div>
+
+<div class="mb-3">
+<label>สัตวแพทย์</label>
+<select name="veterinarian" class="form-control">
+{% for v in vets %}
+<option value="{{ v.vet_id }}" {% if record.vet and record.vet.vet_id == v.vet_id %}selected{% endif %}>{{ v.vet_name }}</option>
+{% endfor %}
+</select>
+</div>
+
+<div class="mb-3">
+<label>วันที่</label>
+<input type="date" name="visit_date" class="form-control"
+value="{{ record.visit_date|date:'Y-m-d' }}">
+</div>
+
+<div class="mb-3">
+<label>การวินิจฉัย</label>
+<textarea name="diagnosis" class="form-control">{{ record.diagnosis }}</textarea>
+</div>
+
+<div class="mb-3">
+<label>การรักษา</label>
+<textarea name="treatment" class="form-control">{{ record.treatment }}</textarea>
+</div>
+
+<div class="mb-3">
+<label>บันทึก</label>
+<textarea name="notes" class="form-control">{{ record.notes }}</textarea>
+</div>
+
+<div class="mb-3">
+<label>ยา</label>
+<select name="medicine" class="form-control">
+<option value="">-- เลือกยา --</option>
+{% for m in medicines %}
+<option value="{{ m.medicine_id }}">{{ m.medicine_name }}</option>
+{% endfor %}
+</select>
+</div>
+
+<div class="mb-3">
+<label>Quantity</label>
+<input type="number" name="quantity" min="1" class="form-control" value="1">
+</div>
+
+<div class="mb-3">
+<label>Existing Treatments</label>
+<table class="table table-sm table-bordered">
+<thead><tr><th>ยา</th><th>จำนวน</th><th>รวมย่อย</th><th>จัดการ</th></tr></thead>
+<tbody>
+{% for t in treatments %}
+<tr>
+<td>{{ t.medicine.medicine_name }}</td>
+<td>{{ t.quantity }}</td>
+<td>{{ t.medicine.price }}</td>
+<td>{{ t.quantity|floatformat:0 }} x {{ t.medicine.price|floatformat:2 }}</td>
+<td><a href="{% url 'remove_treatment' record.record_id t.treatment_id %}" class="btn btn-danger btn-sm" onclick="return confirm('ยกเลิกการรักษา?')">ลบ</a></td>
+</tr>
+{% empty %}
+<tr><td colspan="4">ยังไม่มีการรักษา</td></tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+
+{% if bill %}
+<div class="mb-3">
+<label>Bill ID</label>
+<input type="text" class="form-control" value="{{ bill.bill_id }}" readonly>
+</div>
+<div class="mb-3">
+<label>Bill Amount</label>
+<input type="text" class="form-control" value="{{ bill.total_amount }}" readonly>
+</div>
+{% endif %}
+
+<button class="btn btn-success">ปรับปรุง</button>
+
+<a href="/medical_records/" class="btn btn-secondary">ยกเลิก</a>
+
+</form>
+
+</div>
+
+{% endblock %}

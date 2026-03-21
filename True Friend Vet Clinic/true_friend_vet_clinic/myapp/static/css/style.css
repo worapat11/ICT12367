@@ -1,0 +1,171 @@
+body { background: #f5f7fb; color: #1f2937; }
+.card, .table { border-radius: 0.65rem; }
+.main-card { background: #ffffff; border: 1px solid #e9ecef; box-shadow: 0 6px 20px rgba(0,0,0,0.06); }
+.page-title { font-weight: 700; letter-spacing: 0.2px; }
+.form-label { font-weight: 600; }
+.btn-primary { background-color: #2b6cb0; border-color: #2b6cb0; }
+.btn-primary:hover { background-color: #244f8a; border-color: #244f8a; }
+.table thead { background: #2b6cb0; color: #fff; }
+.navbar-nav .nav-link { color: #e2e8f0 !important; margin-right: 0.4rem; }
+.navbar-brand { color: #f8fafc !important; font-weight: 700; letter-spacing: 0.4px; }
+.btn-primary { background-color: #1d4ed8; border-color: #1d4ed8; }
+.btn-primary:hover { background-color: #1e40af; border-color: #1e40af; }
+.alert { margin-top: 0.75rem; }
+.card-header { background-color: #f1f5f9; font-weight: 700; }
+.footer-small { font-size: 0.85rem; color: #6b7280; }
+.profile-card { border: 1px solid #e2e8f0; background: #ffffff; border-radius: 0.8rem; box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08); }
+.profile-avatar { width: 120px; height: 120px; margin: 0 auto; border-radius: 50%; background: linear-gradient(135deg, #3b82f6, #60a5fa); display: flex; justify-content: center; align-items: center; color: #fff; font-size: 2.2rem; }
+.avatar-emoji { font-size: 2.3rem; }
+@media (max-width: 768px) { .container { padding-left: 0.5rem; padding-right: 0.5rem; } }
+
+/* Print Styles - Document Ready */
+@media print {
+  /* Page setup */
+  @page {
+    size: A4;
+    margin: 10mm;
+  }
+  
+  /* Reset all */
+  * {
+    margin: 0 !important;
+    padding: 0 !important;
+    border-spacing: 0 !important;
+  }
+  
+  html, body {
+    width: 100% !important;
+    height: 100% !important;
+    background: white !important;
+    color: #000 !important;
+    font-family: Arial, sans-serif !important;
+    font-size: 11pt !important;
+    line-height: 1.3 !important;
+  }
+  
+  /* Hide everything from base.html */
+  .navbar,
+  .navbar-brand,
+  .navbar-nav,
+  nav,
+  button,
+  .btn,
+  .d-flex,
+  .gap-2,
+  a.btn,
+  a[href] {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    width: 0 !important;
+  }
+  
+  /* Show only content area */
+  .container {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: white !important;
+  }
+  
+  .container.mt-4 {
+    margin-top: 0 !important;
+  }
+  
+  /* Document Title */
+  h2 {
+    font-size: 14pt !important;
+    font-weight: bold !important;
+    text-align: center !important;
+    margin: 0 0 12pt 0 !important;
+    padding-bottom: 8pt !important;
+    border-bottom: 2pt solid #000 !important;
+    page-break-after: avoid !important;
+  }
+  
+  /* Info Card */
+  .card {
+    border: 1px solid #666 !important;
+    background: #fff !important;
+    padding: 10pt !important;
+    margin: 0 0 12pt 0 !important;
+    box-shadow: none !important;
+    page-break-inside: avoid !important;
+  }
+  
+  .card p {
+    margin: 4pt 0 !important;
+    font-size: 10pt !important;
+    line-height: 1.4 !important;
+  }
+  
+  /* Table */
+  .table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    margin: 12pt 0 !important;
+    font-size: 10pt !important;
+    page-break-inside: avoid !important;
+  }
+  
+  .table thead {
+    display: table-header-group !important;
+    background: #d3d3d3 !important;
+  }
+  
+  .table thead th {
+    border: 1pt solid #000 !important;
+    padding: 6pt !important;
+    text-align: left !important;
+    font-weight: bold !important;
+    background: #d3d3d3 !important;
+  }
+  
+  .table tbody tr {
+    page-break-inside: avoid !important;
+  }
+  
+  .table tbody td {
+    border: 1pt solid #ccc !important;
+    padding: 6pt !important;
+    text-align: left !important;
+  }
+  
+  .table tbody tr:nth-child(even) {
+    background: #f9f9f9 !important;
+  }
+  
+  /* Table Footer */
+  .table tfoot {
+    display: table-footer-group !important;
+    background: #f0f0f0 !important;
+    border-top: 2pt solid #000 !important;
+  }
+  
+  .table tfoot tr {
+    page-break-inside: avoid !important;
+  }
+  
+  .table tfoot th {
+    border: 1pt solid #000 !important;
+    padding: 6pt !important;
+    text-align: right !important;
+    font-weight: bold !important;
+    background: #f0f0f0 !important;
+  }
+  
+  .table-success {
+    background: #e0f2e0 !important;
+    font-weight: bold !important;
+  }
+  
+  /* No webkit scrollbars */
+  ::-webkit-scrollbar { display: none !important; }
+  
+  /* Bootstrap print utilities override */
+  .d-print-none {
+    display: none !important;
+  }
+}
+

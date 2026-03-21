@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2>เจ้าของสัตว์เลี้ยง</h2>
+
+<form method="get" class="row g-2 mb-3">
+    <div class="col-md-9">
+        <input type="text" name="q" value="{{ q|default:'' }}" class="form-control" placeholder="ค้นหาเจ้าของ...">
+    </div>
+    <div class="col-md-3 d-flex gap-2">
+        <button class="btn btn-primary">ค้นหา</button>
+        <a href="{% url 'owner_list' %}" class="btn btn-secondary">รีเซ็ต</a>
+    </div>
+</form>
+
+<a href="{% url 'add_owner' %}" class="btn btn-primary mb-3">เพิ่มเจ้าของ</a>
+
+<table class="table table-bordered">
+
+<thead>
+<tr>
+<th>รหัสเจ้าของ</th>
+<th>ชื่อ</th>
+<th>โทร</th>
+<th>อีเมล</th>
+<th>จัดการ</th>
+</tr>
+</thead>
+
+<tbody>
+
+{% for owner in owners %}
+<tr>
+<td>{{ owner.owner_id }}</td>
+<td>{{ owner.first_name }} {{ owner.last_name }}</td>
+<td>{{ owner.phone }}</td>
+<td>{{ owner.email }}</td>
+<td>
+<a href="{% url 'edit_owner' owner.owner_id %}" class="btn btn-warning btn-sm">แก้ไข</a>
+		<a href="{% url 'delete_owner' owner.owner_id %}" class="btn btn-danger btn-sm" onclick="return confirm('ลบเจ้าของนี้?')">ลบ</a>
+</td>
+</tr>
+{% empty %}
+<tr><td colspan="4">ไม่มีข้อมูล</td></tr>
+{% endfor %}
+
+</tbody>
+</table>
+
+{% endblock %}

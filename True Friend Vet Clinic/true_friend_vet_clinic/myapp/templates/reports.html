@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2 class="page-title">รายงาน</h2>
+<div class="row">
+<div class="col-md-3"><div class="card p-3"><h4>สถานะสต็อก</h4><p>ระดับสต็อกยาและแจ้งเตือน</p><a class="btn btn-primary btn-sm" href="{% url 'report_stock_status' %}">เปิด</a></div></div>
+<div class="col-md-3"><div class="card p-3"><h4>บัญชีสต็อก</h4><p>ติดตามการเข้า/ออกของสต็อก</p><a class="btn btn-primary btn-sm" href="{% url 'report_stock_ledger' %}">เปิด</a></div></div>
+<div class="col-md-3"><div class="card p-3"><h4>รายงานการนัดหมาย</h4><p>นัดหมายทั้งหมด แยกตามสถานะ</p><a class="btn btn-primary btn-sm" href="{% url 'report_appointments' %}">เปิด</a></div></div>
+<div class="col-md-3"><div class="card p-3"><h4>รายงานการชำระเงิน</h4><p>สรุปบิลชำระสมัครรายวัน/เดือน/ปี</p><a class="btn btn-primary btn-sm" href="{% url 'report_payments' %}">เปิด</a></div></div>
+<div class="col-md-3"><div class="card p-3"><h4>รายงานสัตว์</h4><p>สรุปสัตว์เลี้ยงตามสายพันธุ์และเจ้าของ</p><a class="btn btn-primary btn-sm" href="{% url 'report_animals' %}">เปิด</a></div></div>
+
+<div class="col-md-3 mt-3"><div class="card p-3"><h4>ยาที่ใช้บ่อย</h4><p>ย้ายไปแดชบอร์ดแล้ว</p><a class="btn btn-primary btn-sm" href="{% url 'dashboard' %}">ดูแดชบอร์ด</a></div></div>
+<div class="col-md-3 mt-3"><div class="card p-3"><h4>รายงานการขาย POS</h4><p>การขายอาหารสัตว์ แยกตามลูกค้า</p><a class="btn btn-primary btn-sm" href="{% url 'report_pos' %}">เปิด</a></div></div>
+</div>
+{% endblock %}

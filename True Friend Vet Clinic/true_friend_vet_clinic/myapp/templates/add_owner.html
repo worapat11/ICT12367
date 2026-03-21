@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="card main-card p-4 mt-3">
+<h2 class="mb-3">เพิ่มเจ้าของสัตว์เลี้ยง</h2>
+<form method="post">
+{% csrf_token %}
+<p class="text-muted">รหัสเจ้าของจะสร้างอัตโนมัติ</p>
+<div class="mb-3">
+<label class="form-label">ชื่อ</label>
+<input type="text" name="first_name" class="form-control" required>
+</div>
+<div class="mb-3">
+<label class="form-label">นามสกุล</label>
+<input type="text" name="last_name" class="form-control" required>
+</div>
+<div class="mb-3">
+<label class="form-label">เบอร์โทร</label>
+<input type="text" name="phone" class="form-control">
+</div>
+<div class="mb-3">
+<label class="form-label">อีเมล</label>
+<input type="email" name="email" class="form-control">
+</div>
+<div class="mb-3">
+<label class="form-label">ที่อยู่</label>
+<textarea name="address" class="form-control" rows="3"></textarea>
+</div>
+<button type="submit" class="btn btn-primary">บันทึก</button>
+<a href="/owners" class="btn btn-secondary">ยกเลิก</a>
+</form>
+</div>
+{% endblock %}

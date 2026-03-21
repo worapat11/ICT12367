@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>รายงานนัดหมาย</h2>
+<div class="mb-3 d-print-none">
+<button class="btn btn-primary" onclick="window.print()">🖨️ ปริ้น</button>
+<a class="btn btn-secondary" href="{% url 'report_appointments' %}">รีเซ็ต</a>
+</div>
+<form method="get" class="row g-3 mb-3 d-print-none">
+    <div class="col-md-3">
+        <label class="form-label">จากวันที่</label>
+        <input type="date" name="start_date" value="{{ start_date|default:'' }}" class="form-control">
+    </div>
+    <div class="col-md-3">
+        <label class="form-label">สถานะ</label>
+        <select name="status" class="form-select">
+            <option value="all" {% if status == 'all' %}selected{% endif %}>ทั้งหมด</option>
+            <option value="Scheduled" {% if status == 'Scheduled' %}selected{% endif %}>นัดหมาย</option>
+            <option value="Completed" {% if status == 'Completed' %}selected{% endif %}>เสร็จสิ้น</option>
+            <option value="Cancelled" {% if status == 'Cancelled' %}selected{% endif %}>ยกเลิก</option>
+        </select>
+    </div>
+    <div class="col-md-3 align-self-end">
+        <button class="btn btn-primary">กรอง</button>
+        <a href="{% url 'report_appointments' %}" class="btn btn-secondary">รีเซ็ต</a>
+    </div>
+</form>
+
+<div class="row mb-3 d-print-none">
+    <div class="col-md-3"><div class="card p-3"><h5>ทั้งหมด</h5><h3>{{ total }}</h3></div></div>
+    <div class="col-md-3"><div class="card p-3"><h5>นัดหมาย</h5><h3>{{ scheduled }}</h3></div></div>
+    <div class="col-md-3"><div class="card p-3"><h5>เสร็จแล้ว</h5><h3>{{ completed }}</h3></div></div>
+    <div class="col-md-3"><div class="card p-3"><h5>ยกเลิก</h5><h3>{{ cancelled }}</h3></div></div>
+</div>
+
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>รหัส</th>
+            <th>สัตว์เลี้ยง</th>
+            <th>สัตวแพทย์</th>
+            <th>วันที่</th>
+            <th>เวลา</th>
+            <th>สถานะ</th>
+            <th>เหตุผล</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for a in appointments %}
+        <tr>
+            <td>{{ a.appointment_id }}</td>
+            <td>{{ a.pet.pet_name }}</td>
+            <td>{{ a.vet.vet_name }}</td>
+            <td>{{ a.appointment_date|date:'d/m/Y' }}</td>
+            <td>{{ a.appointment_time|time:'H:i' }}</td>
+            <td>{{ a.status.status_name }}</td>
+            <td>{{ a.reason }}</td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="7" class="text-center">ไม่มีนัดหมาย</td></tr>
+        {% endfor %}
+    </tbody>
+    <tfoot>
+        <tr>
+            <th colspan="5">รวม</th>
+            <th colspan="2">{{ total }} รายการ</th>
+        </tr>
+    </tfoot>
+</table>
+{% endblock %}

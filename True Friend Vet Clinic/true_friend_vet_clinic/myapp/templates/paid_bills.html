@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <h2>บิลที่ชำระแล้ว</h2>
+    <a href="{% url 'unpaid_bills' %}" class="btn btn-secondary mb-2">ดูบิลค้างชำระ</a>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Bill ID</th>
+                <th>Pet</th>
+                <th>Owner</th>
+                <th>Amount</th>
+                <th>Payment Method</th>
+                <th>Date</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for bill in bills %}
+            <tr>
+                <td>{{ bill.bill_id }}</td>
+                <td>{{ bill.record.pet.pet_name }}</td>
+                <td>{{ bill.record.pet.owner.first_name }} {{ bill.record.pet.owner.last_name }}</td>
+                <td>{{ bill.total_amount }}</td>
+                <td>{{ bill.payment_method.method_name }}</td>
+                <td>{{ bill.bill_date|date:'d/m/Y' }}</td>
+                <td><a href="{% url 'paid_bill' bill.bill_id %}" class="btn btn-sm btn-info">ดู</a></td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="7" class="text-center">ยังไม่มีบิลที่ชำระแล้ว</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

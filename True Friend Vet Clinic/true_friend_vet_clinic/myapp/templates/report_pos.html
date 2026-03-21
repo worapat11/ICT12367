@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2 class="page-title">รายงานการขาย POS (อาหารสัตว์)</h2>
+<table class="table table-bordered">
+<thead>
+<tr>
+<th>รหัสการขาย</th>
+<th>ลูกค้า</th>
+<th>สินค้า</th>
+<th>จำนวน</th>
+<th>ราคาต่อหน่วย</th>
+<th>ยอดรวม</th>
+<th>วันที่ขาย</th>
+</tr>
+</thead>
+<tbody>
+{% for t in transactions %}
+<tr>
+<td>{{ t.transaction_id }}</td>
+<td>{{ t.customer_name }}</td>
+<td>{{ t.medicine_name }}</td>
+<td>{{ t.quantity }}</td>
+<td>{{ t.unit_price }}</td>
+<td>{{ t.total_amount }}</td>
+<td>{{ t.transaction_date|date:"d/m/Y H:i" }}</td>
+</tr>
+{% empty %}
+<tr><td colspan="7">ไม่มีข้อมูลการขาย POS</td></tr>
+{% endfor %}
+</tbody>
+<tfoot>
+<tr>
+<th colspan="3">รวมทั้งหมด</th>
+<th>{{ total_quantity }}</th>
+<th>-</th>
+<th>{{ total_sales }}</th>
+<th>-</th>
+</tr>
+</tfoot>
+</table>
+{% endblock %}

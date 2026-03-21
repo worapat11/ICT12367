@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2 class="page-title">รายงานบัญชีสต็อก <button class="btn btn-primary btn-sm d-print-none" onclick="window.print()" style="float: right;">🖨️ ปริ้น</button></h2>
+
+<form method="get" class="row g-3 mb-3 d-print-none">
+    <div class="col-md-3">
+        <label class="form-label">วันที่เริ่มต้น</label>
+        <input type="date" name="start_date" value="{{ start_date }}" class="form-control" />
+    </div>
+
+    <div class="col-md-3">
+        <label class="form-label">วันที่สิ้นสุด</label>
+        <input type="date" name="end_date" value="{{ end_date }}" class="form-control" />
+    </div>
+
+    <div class="col-md-3">
+        <label class="form-label">ยา</label>
+        <select class="form-control" name="medicine">
+            <option value="">-- All medicines --</option>
+            {% for med in medicines %}
+                <option value="{{ med.medicine_id }}" {% if med.medicine_id == medicine_id %}selected{% endif %}>
+                    {{ med.medicine_name }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="col-md-3 align-self-end">
+        <button class="btn btn-primary">กรอง</button>
+        <a class="btn btn-secondary" href="{% url 'report_stock_ledger' %}">รีเซ็ต</a>
+    </div>
+</form>
+
+<!-- ✅ Current Balance -->
+<div class="row mb-3 d-print-none">
+    <div class="col-md-6">
+        <div class="card p-3">
+            <h5>ยอดคงเหลือปัจจุบัน</h5>
+            <ul class="list-group">
+                {% for row in current_balance_rows %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <strong>{{ row.medicine }}</strong>
+                        <span>{{ row.qty }}</span>
+                    </li>
+                {% empty %}
+                    <li class="list-group-item text-center">ไม่มีข้อมูล</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- ✅ Ledger Table -->
+<table class="table table-bordered">
+<thead>
+    <tr>
+        <th>วันที่/เวลา</th>
+        <th>ยา</th>
+        <th>เข้า</th>
+        <th>ออก</th>
+        <th>คงเหลือ</th>
+        <th>หมายเหตุ</th>
+    </tr>
+</thead>
+
+<tbody>
+    {% for row in ledger %}
+    <tr>
+        <td>{{ row.date|date:'Y-m-d H:i' }}</td>
+        <td>{{ row.medicine }}</td>
+        <td>{{ row.inbound }}</td>
+        <td>{{ row.outbound }}</td>
+        <td>{{ row.balance }}</td>
+        <td>{{ row.note }}</td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="6" class="text-center">ไม่พบรายการในบัญชีสต็อก</td>
+    </tr>
+    {% endfor %}
+</tbody>
+<tfoot>
+    <tr>
+        <th colspan="2">รวม</th>
+        <th>{{ total_inbound }}</th>
+        <th>{{ total_outbound }}</th>
+        <th></th>
+        <th></th>
+    </tr>
+</tfoot>
+</table>
+
+{% endblock %}

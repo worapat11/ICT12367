@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+<h2>รายละเอียดบิล</h2>
+<div class="card p-3 mb-3">
+<p><strong>รหัสบิล:</strong> {{ bill.bill_id }}</p>
+<p><strong>วันที่บิล:</strong> {{ bill.bill_date|date:'d/m/Y' }}</p>
+<p><strong>สัตว์เลี้ยง:</strong> {{ pet.pet_name }}</p>
+<p><strong>เจ้าของ:</strong> {{ owner.first_name }} {{ owner.last_name }}</p>
+</div>
+
+<table class="table table-bordered">
+<thead>
+<tr>
+<th>สินค้า</th>
+<th>จำนวน</th>
+<th>ราคา/หน่วย</th>
+<th>รวมย่อย</th>
+</tr>
+</thead>
+<tbody>
+{% for t in treatments %}
+<tr>
+<td>{{ t.medicine.medicine_name }}</td>
+<td>{{ t.quantity }}</td>
+<td>{{ t.unit_price|floatformat:2 }}</td>
+<td>{{ t.subtotal|floatformat:2 }}</td>
+</tr>
+{% endfor %}
+</tbody>
+<tfoot>
+<tr>
+<th colspan="2">รวมสินค้า</th>
+<th>{{ total_items }}</th>
+<th></th>
+</tr>
+<tr>
+<th colspan="2">ก่อน VAT (7%)</th>
+<th colspan="2">{{ pre_vat|floatformat:2 }} บาท</th>
+</tr>
+<tr>
+<th colspan="2">VAT (7%)</th>
+<th colspan="2">{{ vat|floatformat:2 }} บาท</th>
+</tr>
+<tr class="table-success">
+<th colspan="2">รวมทั้งหมด</th>
+<th colspan="2">{{ total|floatformat:2 }} บาท</th>
+</tr>
+</tfoot>
+</table>
+
+<div class="d-flex gap-2 d-print-none">
+    <button class="btn btn-primary" onclick="window.print()">🖨️ ปริ้นบิล</button>
+    {% if not bill.payment_method %}
+    <a href="{% url 'pay_bill' bill.bill_id %}" class="btn btn-success">ชำระบิล</a>
+    {% else %}
+    <a href="{% url 'paid_bill' bill.bill_id %}" class="btn btn-success">ดูบิลที่ชำระแล้ว</a>
+    {% endif %}
+    <a href="/medical_records/" class="btn btn-secondary">กลับไปประวัติการรักษา</a>
+</div>
+</div>
+{% endblock %}

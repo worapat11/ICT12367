@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2 class="page-title">รายงานสถานะสต็อก <button class="btn btn-primary btn-sm d-print-none" onclick="window.print()" style="float: right;">🖨️ ปริ้น</button></h2>
+<table class="table table-bordered">
+<thead><tr><th>ยา</th><th>ผู้จัดหา</th><th>คงคลัง</th><th>สถานะ</th></tr></thead>
+<tbody>
+{% for row in rows %}
+<tr>
+<td>{{ row.medicine.medicine_name }}</td>
+<td>{{ row.supplier.supplier_name }}</td>
+<td>{{ row.stock }}</td>
+<td><span class="badge {% if row.status == 'Low' %}bg-danger{% else %}bg-success{% endif %}">{{ row.status }}</span></td>
+</tr>
+{% empty %}
+<tr><td colspan="4">ไม่พบข้อมูลยา</td></tr>
+{% endfor %}
+</tbody>
+<tfoot>
+<tr>
+<th colspan="2">รวม</th>
+<th>{{ total_stock }}</th>
+<th>Low: {{ low_count }} | OK: {{ ok_count }}</th>
+</tr>
+</tfoot>
+</table>
+{% endblock %}

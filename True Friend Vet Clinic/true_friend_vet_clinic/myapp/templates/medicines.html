@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+<h2 class="mb-3">สต็อกสินค้า (ยา / อาหารสัตว์)</h2>
+
+<form method="get" class="row g-2 mb-3">
+    <div class="col-md-9">
+        <input type="text" name="q" value="{{ q|default:'' }}" class="form-control" placeholder="ค้นหาสินค้า...">
+    </div>
+    <div class="col-md-3 d-flex gap-2">
+        <button class="btn btn-primary">ค้นหา</button>
+        <a href="{% url 'medicines' %}" class="btn btn-secondary">รีเซ็ต</a>
+    </div>
+</form>
+
+<a href="{% url 'add_medicine' %}" class="btn btn-primary mb-3">
+เพิ่มสินค้า
+</a>
+
+<table class="table table-bordered text-center">
+
+<thead class="table-dark">
+<tr>
+<th>รหัสสินค้า</th>
+<th>ชื่อ</th>
+<th>ประเภท</th>
+<th>ผู้จัดหา</th>
+<th>ราคา</th>
+<th>คงคลัง</th>
+<th>สถานะ</th>
+<th>จัดการ</th>
+</tr>
+</thead>
+
+<tbody>
+
+{% for item in medicines %}
+<tr class="{% if item.is_low %}table-warning{% endif %}">
+	<td>{{ item.medicine.medicine_id }}</td>
+	<td>{{ item.medicine.medicine_name }}</td>
+	<td>{{ item.medicine.type }}</td>
+	<td>{% if item.medicine.supplier %}{{ item.medicine.supplier.supplier_name }}{% else %}-{% endif %}</td>
+	<td>{{ item.medicine.price }}</td>
+	<td>{{ item.stock }}</td>
+	<td><span class="badge {% if item.is_low %}bg-danger{% else %}bg-success{% endif %}">{% if item.is_low %}ต่ำ{% else %}ปกติ{% endif %}</span></td>
+	<td>
+		<a href="{% url 'edit_medicine' item.medicine.medicine_id %}" class="btn btn-warning btn-sm">แก้ไข</a>
+		<a href="{% url 'delete_medicine' item.medicine.medicine_id %}" class="btn btn-danger btn-sm" onclick="return confirm('ลบรายการนี้?')">ลบ</a>
+	</td>
+</tr>
+{% empty %}
+<tr><td colspan="8" class="text-center text-danger">ไม่มีข้อมูล</td></tr>
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+{% endblock %}

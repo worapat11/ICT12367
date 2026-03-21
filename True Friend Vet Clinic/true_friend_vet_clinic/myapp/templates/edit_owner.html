@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>แก้ไขเจ้าของสัตว์เลี้ยง</h2>
+
+<form method="POST">
+
+{% csrf_token %}
+
+<div class="mb-3">
+<label>รหัสเจ้าของ</label>
+<input type="text" name="owner_id" class="form-control" value="{{ owner.owner_id }}" readonly>
+</div>
+
+<div class="mb-3">
+<label>ชื่อ</label>
+<input type="text" name="first_name" class="form-control"
+value="{{ owner.first_name }}">
+</div>
+
+<div class="mb-3">
+<label>นามสกุล</label>
+<input type="text" name="last_name" class="form-control"
+value="{{ owner.last_name }}">
+</div>
+
+<div class="mb-3">
+<label>โทรศัพท์</label>
+<input type="text" name="phone" class="form-control"
+value="{{ owner.phone }}">
+</div>
+
+<div class="mb-3">
+<label>อีเมล</label>
+<input type="email" name="email" class="form-control"
+value="{{ owner.email }}">
+</div>
+
+<div class="mb-3">
+<label>ที่อยู่</label>
+<textarea name="address" class="form-control">{{ owner.address }}</textarea>
+</div>
+
+<button class="btn btn-success">
+บันทึกการแก้ไข
+</button>
+<a href="/owners/" class="btn btn-secondary">
+ยกเลิก
+</a>
+
+</form>
+
+{% endblock %}
