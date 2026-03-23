@@ -1,0 +1,69 @@
+{% extends "Base.html"%}
+
+{% block title %}
+    <title>เกี่ยวกับเรา</title>
+{% endblock %}
+
+{% block content %}
+<style>
+    .gallery-container {
+        padding: 20px;
+        background-color: #fff;
+    }
+    .gallery-item {
+        margin-bottom: 20px;
+    }
+    .gallery-img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 12px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease;
+        cursor: pointer;
+    }
+    .gallery-img:hover {
+        transform: scale(1.03);
+    }
+    .gallery-title {
+        margin-bottom: 25px;
+        font-weight: bold;
+        color: #333;
+        text-align: center;
+    }
+</style>
+
+<div class="container gallery-container">
+    <h2 class="gallery-title">คลังภาพกีฬาและกิจกรรม</h2>
+    
+<div class="row">
+        <div class="col-md-4 col-sm-6 gallery-item">
+            <img src="https://images.unsplash.com/photo-1517649763962-0c623066013b?q=80&w=1000&auto=format&fit=crop" class="gallery-img" alt="Sports Arena">
+        </div>
+        <div class="col-md-4 col-sm-6 gallery-item">
+            <img src="https://images.unsplash.com/photo-1521412644187-c49fa049e84d?q=80&w=1000&auto=format&fit=crop" class="gallery-img" alt="Workout Session">
+        </div>
+        <div class="col-md-4 col-sm-6 gallery-item">
+            <img src="https://images.unsplash.com/photo-1521412644187-c49fa049e84d?q=80&w=1000&auto=format&fit=crop" class="gallery-img" alt="Team Training">
+        </div>
+        <div class="col-md-4 col-sm-6 gallery-item">
+            <img src="https://images.unsplash.com/photo-1535914254981-b5012eebbd15?q=80&w=1000&auto=format&fit=crop" class="gallery-img" alt="Runner">
+        </div>
+        <div class="col-md-4 col-sm-6 gallery-item">
+            <img src="https://images.unsplash.com/photo-1517649186407-5edc8310ad6e?q=80&w=1000&auto=format&fit=crop" class="gallery-img" alt="Football practice">
+        </div>
+        <div class="col-md-4 col-sm-6 gallery-item">
+            <img src="https://images.unsplash.com/photo-1521412644187-c49fa049e84d?q=80&w=1000&auto=format&fit=crop" class="gallery-img" alt="Basketball game">
+        </div>
+        <div class="col-md-4 col-sm-6 gallery-item">
+            <img src="https://images.unsplash.com/photo-1496317899792-9d7dbcd928a1?q=80&w=1000&auto=format&fit=crop" class="gallery-img" alt="Cycling">
+        </div>
+        <div class="col-md-4 col-sm-6 gallery-item">
+            <img src="https://images.unsplash.com/photo-1548208567-9584c37d8208?q=80&w=1000&auto=format&fit=crop" class="gallery-img" alt="Gym workout">
+        </div>
+        <div class="col-md-4 col-sm-6 gallery-item">
+            <img src="https://images.unsplash.com/photo-1517649763962-0c623066013b?q=80&w=1000&auto=format&fit=crop" class="gallery-img" alt="Outdoor sports">
+        </div>
+    </div>
+</div>
+{% endblock %}

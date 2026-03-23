@@ -1,0 +1,88 @@
+{% extends "Base.html" %}
+
+{% block content %}
+
+<style>
+    .cafe-card {
+        border: none;
+        border-radius: 25px;
+        overflow: hidden;
+        transition: all 0.4s ease;
+        background: #fff;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    }
+    .cafe-card:hover {
+        transform: translateY(-12px);
+        box-shadow: 0 20px 40px rgba(111, 78, 55, 0.15) !important;
+    }
+    .icon-circle {
+        width: 80px;
+        height: 80px;
+        background: #fdf5e6;
+        color: #6F4E37;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        margin: 0 auto 20px;
+    }
+
+    .map-container {
+        border-radius: 30px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        border: 8px solid white;
+    }
+    .section-title {
+        color: #6F4E37;
+        font-weight: 700;
+        margin-bottom: 40px;
+        position: relative;
+    }
+    .section-title::after {
+        content: '';
+        display: block;
+        width: 50px;
+        height: 3px;
+        background: #C19A6B;
+        margin: 10px auto;
+    }
+</style>
+
+<div class="container py-5">
+    <h2 class="text-center section-title">ข้อมูลสมาชิก SPORTS ZONE</h2>
+    
+    <div class="table-responsive">
+        <table class="table table-hover mt-4">
+            <thead style="background-color: #0b3d91;">
+                <tr class="text-center text-white">
+                    <th scope="col">ลำดับ</th>
+                    <th scope="col">ชื่อสมาชิก</th>
+                    <th scope="col">อายุ</th>
+                    <th scope="col">แก้ไข</th>
+                    <th scope="col">ลบ</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in all_person %}
+                <tr class="text-center">
+                    <th scope="row">{{ p.id }}</th>
+                    <td>{{ p.name }}</td>
+                    <td>{{ p.age }}</td>
+                    <td>
+                        <a href="#" class="btn btn-sm text-white" style="background-color: #d63384;">แก้ไข</a>
+                    </td>
+                    <td>
+                        <a href="#" class="btn btn-sm text-white" style="background-color: #fd7e14;">ลบ</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" class="text-center text-muted py-4">ยังไม่มีสมาชิก ลงทะเบียนเลย!</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

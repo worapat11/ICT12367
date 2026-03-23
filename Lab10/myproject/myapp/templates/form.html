@@ -1,0 +1,95 @@
+{% extends "Base.html" %}
+
+{% block title %}
+    <title>สมัครสมาชิก | SPORTS ZONE</title>
+{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        background-color: #eef2f6;
+    }
+    .form-container {
+        width: 100%;
+        max-width: 500px;
+        margin: 50px auto;
+        box-shadow: 0 10px 25px rgba(111, 78, 55, 0.1);
+        border-radius: 15px;
+        overflow: hidden;
+        border: none;
+    }
+    .card-header-custom {
+        background-color: #0056b3;
+        color: white;
+        padding: 20px;
+        font-weight: bold;
+        font-size: 1.4rem;
+        text-align: center;
+        border-bottom: 5px solid #003e7e;
+    }
+    .form-label {
+        color: #5a3e2b;
+        font-weight: 600;
+    }
+    .form-control {
+        border: 1px solid #d7ccc8;
+        border-radius: 10px;
+    }
+    .form-control:focus {
+        border-color: #6F4E37;
+        box-shadow: 0 0 0 0.25rem rgba(111, 78, 55, 0.25);
+    }
+
+    .btn-register {
+        background-color: #4E6E5D; 
+        color: white;
+        border: none;
+        border-radius: 10px;
+        transition: 0.3s;
+    }
+    .btn-register:hover {
+        background-color: #3d5648;
+        color: white;
+        transform: translateY(-2px);
+    }
+
+    .btn-clear {
+        background-color: #bc8e5c;
+        color: white;
+        border: none;
+        border-radius: 10px;
+    }
+    .btn-clear:hover {
+        background-color: #a67c4e;
+        color: white;
+    }
+</style>
+
+<div class="card form-container">
+    <div class="card-header-custom">
+        <i class="bi bi-person-badge-fill me-2"></i>สมัครสมาชิก SPORTS ZONE
+    </div>
+    <div class="card-body p-4">
+        <p class="text-center text-muted mb-4">ร่วมเป็นสมาชิกชุมชนกีฬาของเราเพื่อพัฒนาศักยภาพและรับโปรแกรมฝึกพิเศษ</p>
+        
+        <form method="POST" action=""> 
+            {% csrf_token %} 
+            
+            <div class="mb-3">
+                <label for="name" class="form-label">ชื่อ-นามสกุล</label>
+                <input type="text" name="name" class="form-control" id="name" placeholder="เช่น สมชาย กีฬา" required>
+            </div>
+
+            <div class="mb-4">
+                <label for="age" class="form-label">อายุ</label>
+                <input type="number" name="age" class="form-control" id="age" placeholder="กรอกข้อมูลอายุเป็นตัวเลข" required>
+            </div>
+
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-sm text-white" style="background-color: #d63384;">ลงทะเบียนสมาชิก</button>
+                <button type="reset" class="btn btn-sm text-white" style="background-color: #fd7e14;">ยกเลิก</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
