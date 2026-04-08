@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>แก้ไขข้อมูลประชากร</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+
+<nav class="navbar navbar-dark bg-dark">
+<div class="container">
+
+<span class="navbar-brand">ICT12367 SPU</span>
+
+<div>
+<a href="{% url 'home' %}" class="text-white me-3">หน้าแรก</a>
+<a href="{% url 'register' %}" class="text-white me-3">ลงทะเบียน</a>
+<a href="{% url 'about' %}" class="text-white">เกี่ยวกับเรา</a>
+</div>
+
+</div>
+</nav>
+
+
+
+<div class="container mt-4">
+
+<div class="position-relative">
+
+<img src="https://picsum.photos/900/200" class="img-fluid w-100">
+
+<h3 class="position-absolute top-50 start-50 translate-middle text-white text-center">
+ยินดีต้อนรับสู่เว็บไซต์ของรายวิชา ICT12367
+</h3>
+
+</div>
+
+</div>
+
+
+
+<div class="container mt-4">
+
+<div class="card mx-auto" style="max-width:400px;">
+
+<div class="card-header bg-primary text-white text-center">
+แบบฟอร์มแก้ไขข้อมูลประชากร
+</div>
+
+<div class="card-body">
+
+<form method="POST">
+{% csrf_token %}
+
+<div class="mb-3">
+<label class="form-label">รหัสประชากร</label>
+<input type="number" class="form-control" name="pid" value="{{ person.pid }}" required>
+</div>
+
+<div class="mb-3">
+<label class="form-label">ชื่อประชากร</label>
+<input type="text" class="form-control" name="name" value="{{ person.name }}" placeholder="กรุณากรอกชื่อ-นามสกุล" required>
+</div>
+
+<div class="mb-3">
+<label class="form-label">อายุ</label>
+<input type="number" class="form-control" name="age" value="{{ person.age }}" placeholder="กรอกอายุของคุณ" required>
+</div>
+
+<button type="submit" class="btn btn-success">บันทึกการแก้ไข</button>
+<a href="{% url 'home' %}" class="btn btn-secondary">ยกเลิก</a>
+
+</form>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<footer class="bg-dark text-white text-center p-3 mt-5">
+© 2024 ICT12367 SPU | Information Technology
+</footer>
+
+
+</body>
+</html>
